@@ -163,7 +163,7 @@ if __name__ == '__main__':
     plt.legend()
 
     plt.savefig(
-        '/Users/Shared/Brandeis Coding/Functions/Final/Turring_Patterns/mean_theta_with_sharpness_change.png',
+        '/Users/swetansinha/Brandeis_Coding/Functions/Final/mean_theta_with_sharpness_change_revised_for_no_oscillations.png',
         dpi=300,
         bbox_inches='tight'
     )
