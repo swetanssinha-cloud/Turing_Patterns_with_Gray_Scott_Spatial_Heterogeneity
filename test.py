@@ -97,7 +97,8 @@ def run_simulation(seed, Du, Dv, dx, dt, solver,
 if __name__ == '__main__':
 
     # Different sharpness values
-    s_values = np.linspace(0, 1, 5)
+    #s_values = np.linspace(0, 1, 5) #testing s
+    p_values = [30, 40, 50, 60, 70] #testing p
 
     F = model.F
     k = model.k
@@ -108,12 +109,13 @@ if __name__ == '__main__':
     plt.figure(figsize=(8, 6))
 
     # Loop over sharpness values
-    for s_val in s_values:
+    #for s_val in s_values:
+    for p_val in p_values:
 
-        print(f"\nRunning s = {s_val:.2f}")
+        print(f"\nRunning p1 = {p_val:.2f}")
 
         # Get model parameters
-        params = model.init_params(50, s_value=s_val)
+        params = model.init_params(p1=p_val, s_value=0.1) #keep s constant at 0.1 when testing p, and keep p constant at 50 when testing s
 
         Du = params['Du']
         Dv = params['Dv']

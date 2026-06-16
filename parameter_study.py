@@ -110,10 +110,10 @@ if __name__=='__main__':
     plt.figure(figsize=(8, 6))
 
 
-    #for p1 in p_values:
-    for s_val in s_values:
-        #params = model.init_params(p1) for changing width of inner
-        params = model.init_params(50, s_value=s_val) #for changing steepness of the tanh curve. I am keeping p1 constant at 50 for this.
+    for p1 in p_values:
+    #for s_val in s_values:
+        params = model.init_params(p1) #for changing width of inner
+        #params = model.init_params(50, s_value=s_val) #for changing steepness of the tanh curve. I am keeping p1 constant at 50 for this.
         Du = params['Du']; Dv = params['Dv']; dx = params['dx']; dt = params['dt']; x = params['x']
 
         # build list of argument tuples for starmap (one tuple per simulation)
@@ -137,13 +137,13 @@ if __name__=='__main__':
             mean_theta = results.mean(axis=0)
 
         #plt.plot(x, mean_theta, label=f"p1={p1}")
-        plt.plot(x, mean_theta, label=f"s={s_val:.2f}")
+        plt.plot(x, mean_theta, label=f"width={200-2*p1:.2f}")
 
     plt.xlabel('X')
     plt.ylabel('Mean Theta (degrees)')
     plt.title('Mean Theta vs X')
     plt.legend()
-    plt.savefig('/Users/Shared/Brandeis Coding/Functions/Final/Turring_Patterns/mean_theta_with_sharpness_change.png', dpi=300, bbox_inches='tight')
+    plt.savefig('/Users/swetanh/Brandeis Coding/Functions/Final/Turring_Patterns/mean_theta_with_sharpness_change.png', dpi=300, bbox_inches='tight') #edit this line to work - path is incorrect
     plt.show()
 
     '''what I had before is below'''
