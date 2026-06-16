@@ -152,7 +152,7 @@ if __name__ == '__main__':
         mean_theta_smoothed = np.convolve(mean_theta, kernel, mode='same')
 
         # Plot
-        plt.plot(x, mean_theta_smoothed, label=f"s={s_val:.2f}")
+        plt.plot(x, mean_theta_smoothed, label=f"width={200-2*p_val:.2f}")
 
     # =========================
     # FINAL PLOT
