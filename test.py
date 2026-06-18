@@ -3,6 +3,7 @@
 from multiprocessing import Pool, cpu_count
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy import stats
 import GSw_tanhGraph as model
 
 
@@ -108,6 +109,10 @@ if __name__ == '__main__':
 
     plt.figure(figsize=(8, 6))
 
+    '''list for graph'''
+    angle_at_p = []
+    #angle_at_50_for_sharpness = []
+
     # Loop over sharpness values
     #for s_val in s_values:
     for p_val in p_values:
@@ -115,7 +120,7 @@ if __name__ == '__main__':
         print(f"\nRunning p1 = {p_val:.2f}")
 
         # Get model parameters
-        params = model.init_params(p1=p_val, s_value=0.1) #keep s constant at 0.1 when testing p, and keep p constant at 50 when testing s
+        params = model.init_params(p_val, s_value=0.1) #keep s constant at 0.1 when testing p, and keep p constant at 50 when testing s
 
         Du = params['Du']
         Dv = params['Dv']
@@ -141,6 +146,7 @@ if __name__ == '__main__':
         # Average across simulations
         mean_theta = np.mean(results, axis=0)
 
+
         # =====================================
         # OPTIONAL SPATIAL SMOOTHING
         # =====================================
@@ -150,6 +156,9 @@ if __name__ == '__main__':
         kernel = np.ones(window_size) / window_size
 
         mean_theta_smoothed = np.convolve(mean_theta, kernel, mode='same')
+
+        '''adding some code to get a plot of angle at a certain position versus sharpness'''
+        angle_at_p.append(mean_theta_smoothed[p_val]) #for testing sharpness, change index to 50 to keep p constant at 50
 
         # Plot
         plt.plot(x, mean_theta_smoothed, label=f"width={200-2*p_val:.2f}")
@@ -172,3 +181,23 @@ if __name__ == '__main__':
     )
 
     plt.show()
+
+    #============================
+    # Test for PLOT
+    #============================
+
+    '''to get a plot of angle at certain position with different widths'''
+    plt.figure()
+    plt.plot(p_values, angle_at_p, marker='o')
+    r = stats.linregress(p_values, angle_at_p)
+    plt.plot(p_values, r.intercept + r.slope * np.array(p_values), label=f"Linear Fit: y={r.slope:.2f}x + {r.intercept:.2f}, R²={r.rvalue**2:.2f}")
+    plt.xlabel('p value (width parameter)')
+    plt.ylabel('Mean Theta at p')
+    plt.title('Mean Theta at p vs p value')
+    plt.savefig(
+        'Users/swetansinha/Projects/Brandeis_Coding/Functions/Final/mean_theta_at_p_vs_p_value.png',
+        dpi=300,
+        bbox_inches='tight'
+    )
+    plt.show()
+    '''To just see if plot is created the way I want it to be.'''
