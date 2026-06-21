@@ -174,7 +174,7 @@ if __name__ == '__main__':
     plt.legend()
 
     plt.savefig(
-        'Users/swetansinha/Projects/Brandeis_Coding/Functions/Final/mean_theta_with_width_change_revised_for_no_oscillations.png',
+        'mean_theta_with_width_change_revised_for_no_oscillations.png',
         #could do whole file path and say Users/swetansinha/Projects/Brandeis_Coding/Functions/Final/name.png
         dpi=300,
         bbox_inches='tight'
@@ -195,7 +195,7 @@ if __name__ == '__main__':
     plt.ylabel('Mean Theta at p')
     plt.title('Mean Theta at p vs p value')
     plt.savefig(
-        'Users/swetansinha/Projects/Brandeis_Coding/Functions/Final/mean_theta_at_p_vs_p_value.png',
+        'mean_theta_at_p_vs_p_value.png',
         dpi=300,
         bbox_inches='tight'
     )
