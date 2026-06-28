@@ -97,8 +97,9 @@ def run_simulation(seed, Du, Dv, dx, dt, solver,
 
 if __name__ == '__main__':
 
+    '''parameters'''
     # Different sharpness values
-    #s_values = np.linspace(0, 1, 5) #testing s
+    s_values = np.linspace(0, 1, 5) #testing s
     p_values = [30, 40, 50, 60, 70] #testing p
 
     F = model.F
@@ -106,7 +107,10 @@ if __name__ == '__main__':
 
     solver = model.solver
     first_derivative = model.first_derivative
+    p_val = 50
+    s_val = 0.1
 
+#================================
     plt.figure(figsize=(8, 6))
 
     '''list for graph'''
@@ -114,13 +118,13 @@ if __name__ == '__main__':
     #angle_at_50_for_sharpness = []
 
     # Loop over sharpness values
-    #for s_val in s_values:
-    for p_val in p_values:
+    for s_val in s_values:
+    #for p_val in p_values:
 
-        print(f"\nRunning p1 = {p_val:.2f}")
+        print(f"\nRunning s1 = {s_val:.2f}")
 
         # Get model parameters
-        params = model.init_params(p_val, s_value=0.1) #keep s constant at 0.1 when testing p, and keep p constant at 50 when testing s
+        params = model.init_params(p_val, s_value=s_val) #keep s constant at 0.1 when testing p, and keep p constant at 50 when testing s
 
         Du = params['Du']
         Dv = params['Dv']
@@ -174,7 +178,7 @@ if __name__ == '__main__':
     plt.legend()
 
     plt.savefig(
-        'mean_theta_with_width_change_revised_for_no_oscillations.png',
+        'mean_theta_with_sharpness_change_revised_for_no_oscillations.png',
         #could do whole file path and say Users/swetansinha/Projects/Brandeis_Coding/Functions/Final/name.png
         dpi=300,
         bbox_inches='tight'
@@ -186,18 +190,34 @@ if __name__ == '__main__':
     # Test for PLOT
     #============================
 
+    # '''to get a plot of angle at certain position with different widths'''
+    # plt.figure()
+    # plt.plot(p_values, angle_at_p, marker='o')
+    # r = stats.linregress(p_values, angle_at_p)
+    # plt.plot(p_values, r.intercept + r.slope * np.array(p_values), label=f"Linear Fit: y={r.slope:.2f}x + {r.intercept:.2f}, R²={r.rvalue**2:.2f}")
+    # plt.xlabel('p value (width parameter)')
+    # plt.ylabel('Mean Theta at p')
+    # plt.title('Mean Theta at p vs p value')
+    # plt.savefig(
+    #     'mean_theta_at_p_vs_p_value.png',
+    #     dpi=300,
+    #     bbox_inches='tight'
+    # )
+    # plt.show()
+
     '''to get a plot of angle at certain position with different widths'''
     plt.figure()
-    plt.plot(p_values, angle_at_p, marker='o')
-    r = stats.linregress(p_values, angle_at_p)
-    plt.plot(p_values, r.intercept + r.slope * np.array(p_values), label=f"Linear Fit: y={r.slope:.2f}x + {r.intercept:.2f}, R²={r.rvalue**2:.2f}")
-    plt.xlabel('p value (width parameter)')
-    plt.ylabel('Mean Theta at p')
-    plt.title('Mean Theta at p vs p value')
+    plt.plot(s_values, angle_at_p, marker='o')
+    r = stats.linregress(s_values, angle_at_p)
+    plt.plot(s_values, r.intercept + r.slope * np.array(s_values), label=f"Linear Fit: y={r.slope:.2f}x + {r.intercept:.2f}, R²={r.rvalue**2:.2f}")
+    plt.xlabel('s value (sharpness parameter)')
+    plt.ylabel('Mean Theta at s')
+    plt.title('Mean Theta at s vs s value')
     plt.savefig(
         'mean_theta_at_p_vs_p_value.png',
         dpi=300,
         bbox_inches='tight'
     )
     plt.show()
+
     '''To just see if plot is created the way I want it to be.'''
